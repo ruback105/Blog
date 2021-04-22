@@ -20,7 +20,10 @@
                         <i class="fas fa-comment fa-2x px-2  text-green-500 hover:text-red-500 cursor-pointer"></i>
                         <i class="fas fa-share fa-2x px-2  text-green-500 hover:text-red-500 cursor-pointer"></i>
                     </div>
-                    <button class="background-main rounded-3xl text-xl py-3 px-10 font-semibold">Edit</button>
+                    @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+                        <a href="/posts/{{ $post->slug }}/edit"
+                            class="background-main rounded-3xl text-xl py-3 px-10 font-semibold">Edit</a>
+                    @endif
                 </div>
             </div>
         </div>

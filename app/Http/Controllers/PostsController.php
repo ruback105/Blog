@@ -93,7 +93,7 @@ class PostsController extends Controller
     {
         return view('posts.edit')->with(
             'post',
-            Post::where('slug', '$slug')->first()
+            Post::where('slug', $slug)->first()
         );
     }
 
@@ -101,12 +101,27 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        Post::where('slug', $slug)->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'category' => $request->input('category'),
+            'slug' => SlugService::createSlug(
+                Post::class,
+                'slug',
+                $request->title
+            ),
+            'image_path' => $request->input('image_path'),
+        ]);
+
+        return redirect('/posts')->with(
+            'message',
+            'Your post has been updated!'
+        );
     }
 
     /**
