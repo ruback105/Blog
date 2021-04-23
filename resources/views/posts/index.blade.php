@@ -214,7 +214,7 @@
                 </ul>
             </div>
         @endif
-        <form action="/post" method="POST" enctype="multipart/form-data"
+        <form action="/store/post" method="POST" enctype="multipart/form-data"
             class="new flex flex-col flex-wrap mt-10 w-4/5 mx-auto">
             @csrf
             <h1 class="title font-extrabold text-xl">Create new post</h1>

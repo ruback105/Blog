@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comments;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -77,10 +83,14 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        return view('posts.show')->with(
-            'post',
-            Post::where('slug', $slug)->first()
-        );
+        return view('posts.show')
+            ->with('post', Post::where('slug', $slug)->first())
+            ->with(
+                'comments',
+                Comments::where('post_slug', $slug)
+                    ->orderBy('updated_at', 'DESC')
+                    ->get()
+            );
     }
 
     /**
@@ -127,11 +137,17 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $post = Post::where('slug', $slug)->first();
+        $post->delete();
+
+        return redirect('posts')->with(
+            'message',
+            'Your post has been deleted!'
+        );
     }
 }

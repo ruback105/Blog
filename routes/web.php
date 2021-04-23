@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +21,12 @@ Route::get('/', [PagesController::class, 'index']);
 
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/post', [PostsController::class, 'post']);
+Route::get('/profile', [ProfileController::class, 'index']);
 
-Route::post('/post', [PostsController::class, 'store']);
+Route::post('/store/post', [PostsController::class, 'store']);
+Route::post('/store/comment', [CommentsController::class, 'store']);
+
+Route::put('/profile/{id}', [ProfileController::class, 'update']);
 
 Route::resource('/posts', PostsController::class);
 
