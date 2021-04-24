@@ -32,19 +32,20 @@
                         <div class="text-center py-2 text-xl font-semibold">10</div>
                         <i class="fas fa-heart-broken pl-4 text-green-500 hover:text-red-500 cursor-pointer fa-2x"></i>
                     </div>
-                    @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
-                        <div class="buttons flex flex-row">
-                            <a href="/posts/{{ $post->slug }}/edit"
-                                class="background-main rounded-3xl text-xl font-semibold py-3 px-10 mr-3">Edit</a>
-                            <form action="/posts/{{ $post->slug }}" method="POST"
-                                class="bg-red-500 rounded-3xl text-xl py-3 px-10 font-semibold">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="text-xl font-semibold">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
+                    @if ((isset(Auth::user()->id)) && Auth::user()->id == $post->user_id || (isset(Auth::user()->id)) &&
+                    Auth::user()->role == 'moderators')
+                    <div class="buttons flex flex-row">
+                        <a href="/posts/{{ $post->slug }}/edit"
+                            class="background-main rounded-3xl text-xl font-semibold py-3 px-10 mr-3">Edit</a>
+                        <form action="/posts/{{ $post->slug }}" method="POST"
+                            class="bg-red-500 rounded-3xl text-xl py-3 px-10 font-semibold">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="text-xl font-semibold">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                     @endif
                 </div>
             </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comments;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -51,9 +52,13 @@ class PostsController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'image_path' => 'required',
+            'post_image' =>
+                'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category' => 'required',
         ]);
+
+        $imageName = time() . '.' . $request->post_image->extension();
+        $request->post_image->move(public_path('images'), $imageName);
 
         Post::create([
             'title' => $request->input('title'),
@@ -65,7 +70,7 @@ class PostsController extends Controller
                 'slug',
                 $request->title
             ),
-            'image_path' => $request->input('image_path'),
+            'image_path' => '/images/' . $imageName,
             'user_id' => auth()->user()->id,
         ]);
 
@@ -116,6 +121,19 @@ class PostsController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        $post_image = isset($imageName)
+            ? '/images/' . $imageName
+            : Auth::user()->avatar_path;
+
         Post::where('slug', $slug)->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -125,7 +143,7 @@ class PostsController extends Controller
                 'slug',
                 $request->title
             ),
-            'image_path' => $request->input('image_path'),
+            'image_path' => $post_image,
         ]);
 
         return redirect('/posts')->with(

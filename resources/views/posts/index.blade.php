@@ -204,7 +204,6 @@
         </div>
     @endif
     @if (Auth::check())
-
         @if ($errors->any())
             <div class="errors w-4/5 m-auto">
                 <ul>
@@ -218,14 +217,14 @@
             class="new flex flex-col flex-wrap mt-10 w-4/5 mx-auto">
             @csrf
             <h1 class="title font-extrabold text-xl">Create new post</h1>
-            <input type="text" name="title" class="title px-3 py-3 mt-5" placeholder="Title *">
-            <textarea class="description px-3 py-3 mt-5 min-h-90" name="description" placeholder="Description *"></textarea>
-            <input type="text" name="image_path" class="image_url px-3 py-3 mt-5" placeholder="Image url *">
+            <input type="text" name="title" class="title px-3 py-3 mt-5" placeholder="Title">
+            <textarea class="description px-3 py-3 mt-5 min-h-90" name="description" placeholder="Description"></textarea>
             <select name="category" class="category px-3 py-3 mt-5">
                 <option value="animals">Animals</option>
                 <option value="gaming">Gaming</option>
                 <option value="rtu">RTU</option>
             </select>
+            <input type="file" name="post_image" class="py-3 mt-5" class="form-control">
             <button type="submit"
                 class="background-main rounded-3xl text-xl py-3 px-6 font-semibold mt-5 w-full max-w-xs mx-auto">Create
                 post</button>

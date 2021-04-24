@@ -25,12 +25,12 @@
             <h1 class="title font-extrabold text-xl mt-10">Post Edit</h1>
             <input type="text" name="title" class="title px-3 py-3 mt-5" value="{{ $post->title }}">
             <textarea class="description px-3 py-3 mt-5 min-h-90" name="description">{{ $post->description }}</textarea>
-            <input type="text" name="image_path" class="image_url px-3 py-3 mt-5" value="{{ $post->image_path }}">
             <select name="category" class="category px-3 py-3 mt-5">
                 <option value="animals">Animals</option>
                 <option value="gaming">Gaming</option>
                 <option value="rtu">RTU</option>
             </select>
+            <input type="file" name="post_image" class="py-3 mt-5" class="form-control">
             <button type="submit"
                 class="background-main rounded-3xl text-xl py-3 px-6 font-semibold mt-5 w-full max-w-xs mx-auto">Update
                 post</button>

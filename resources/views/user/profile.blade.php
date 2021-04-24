@@ -25,7 +25,7 @@
             <div class="wrapper flex flex-col md:flex-row justify-between mt-10">
                 <div class="col-left w-full md:w-1/2">
                     <img src="{{ $user->avatar_path }}" alt="avatar"
-                        class="h-full w-full md:w-3/4 shadow-md object-cover mb-5 md:mb-0 rounded-full">
+                        class="h-full w-full md:w-3/4 shadow-md object-cover mb-5 md:mb-0 rounded-full text-center">
                 </div>
                 <div class="col-right w-full md:w-1/2">
                     <form class="flex flex-col" action="/profile/{{ Auth::user()->id }}" method="POST"
