@@ -122,17 +122,17 @@ class PostsController extends Controller
     public function update(Request $request, $slug)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'post_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if ($request->image) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+        if ($request->post_image) {
+            $imageName = time() . '.' . $request->post_image->extension();
+            $request->post_image->move(public_path('images'), $imageName);
         }
 
         $post_image = isset($imageName)
             ? '/images/' . $imageName
-            : Auth::user()->avatar_path;
+            : Post::where('slug', $slug)->first()->image_path;
 
         Post::where('slug', $slug)->update([
             'title' => $request->input('title'),
