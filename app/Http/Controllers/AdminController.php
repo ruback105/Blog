@@ -39,10 +39,12 @@ class AdminController extends Controller
         ]);
 
         User::where('id', $id)->update([
-            'name' => $request->input('name'),
-            'surname' => $request->input('surname'),
+            'name' => $request->input('name') ? $request->input('surname') : '',
+            'surname' => $request->input('surname')
+                ? $request->input('surname')
+                : '',
             'email' => $request->input('email'),
-            'role' => $request->input('role'),
+            'role' => $request->input('role') ? $request->input('surname') : '',
         ]);
 
         return back()->with('success', 'You have successfully updated user.');

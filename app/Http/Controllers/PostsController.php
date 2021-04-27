@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comments;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {

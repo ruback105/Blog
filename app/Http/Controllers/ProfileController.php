@@ -47,8 +47,10 @@ class ProfileController extends Controller
             : Auth::user()->avatar_path;
 
         User::where('id', $id)->update([
-            'name' => $request->input('name'),
-            'surname' => $request->input('surname'),
+            'name' => $request->input('name') ? $request->input('surname') : '',
+            'surname' => $request->input('surname')
+                ? $request->input('surname')
+                : '',
             'email' => $request->input('email'),
             'avatar_path' => $avatar_path,
         ]);
